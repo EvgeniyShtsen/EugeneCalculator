@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Calculator
 
 {
@@ -6,94 +7,190 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            char ultima = 'y';
-            while (ultima == 'y')
+            Console.WriteLine("Hello!");
+            var mainUltima = "y";
+            while (mainUltima == "y")
             {
-                Console.WriteLine("Hello! Choose a calculation method:\n 1) Addition (+) \n 2) Subtraction (-) \n 3) Multiplication (*) \n 4) Division (/) \n 5) Modulo (%)");
-                ChooseMethod();
-                Console.WriteLine("Do you want to continue use a calculator? \n 1) Press 'y' if YES \n 2) Press 'n' if NO");
-                ultima = Convert.ToChar(Console.ReadLine());
+                var isChoice = ChooseMethod();
+                if (isChoice >= 1 && isChoice <= 5)
+                {
+                    var valueUltima = "y";
+                    while (valueUltima == "y")
+                    {
+                        Console.WriteLine("Please, enter two value:");
+                        var firstValue = 0.0;
+                        var isFirstValue = double.TryParse(Console.ReadLine(), out firstValue);
+                        var secondValue = 0.0;
+                        var isSecondValue = double.TryParse(Console.ReadLine(), out secondValue);
+                        if (isFirstValue && isSecondValue)
+                        {
+                            switch (isChoice)
+                            {
+                                case 1:
+                                    AdditionMethod(firstValue, secondValue);
+                                    break;
+                                case 2:
+                                    SubtractionMethod(firstValue, secondValue);
+                                    break;
+                                case 3:
+                                    MultiplicationMethod(firstValue, secondValue);
+                                    break;
+                                case 4:
+                                    DivisionMethod(firstValue, secondValue);
+                                    break;
+                                case 5:
+                                    ExponentiationMethod(firstValue, secondValue);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You entered invalid values.");
+                            Console.WriteLine("Do you want to retry? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                            valueUltima = Console.ReadLine();
+                            continue;
+                        }
+                        Console.WriteLine("Do you want to continue use this method? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                        valueUltima = Console.ReadLine();
+                    }
+                }
+                if (isChoice == 6)
+                {
+                    var isValueUltima = "y";
+                    while (isValueUltima == "y")
+                    {
+                        Console.WriteLine("Please, enter a positive value (MAX value = 170):");
+                        double factorialValue = 0.0;
+                        var isFactorialValue = double.TryParse(Console.ReadLine(), out factorialValue);
+                        if (isFactorialValue && factorialValue >= 0)
+                        {
+                            switch (isChoice)
+                            {
+                                case 6:
+                                    FactorialMethod(factorialValue);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("You entered invalid values. Factorial calculation only works for positive values.");
+                            Console.WriteLine("Do you want to retry? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                            isValueUltima = Console.ReadLine();
+                            continue;
+                        }
+                        Console.WriteLine("Do you want to continue use this method? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                        isValueUltima = Console.ReadLine();
+                    }
+                }
+                Console.WriteLine("Do you want to continue use a calculator? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                mainUltima = Console.ReadLine();
+                if (mainUltima != "y")
+                {
+                    Console.WriteLine("Have a good day!");
+                }
             }
+        }
 
-        }
-        static int AdditionMethod(int firstValue, int secondValue)
+        static double AdditionMethod(double firstValue, double secondValue)
+
         {
-            return firstValue + secondValue;
+            var additionResult = 0.0;
+            additionResult = firstValue + secondValue;
+            Console.WriteLine($"Addition result: {firstValue} + {secondValue} = {additionResult}.");
+            return additionResult;
         }
-        static int SubtractionMethod(int firstValue, int secondValue)
+
+        static double SubtractionMethod(double firstValue, double secondValue)
         {
-            return firstValue - secondValue;
+            var subtractionResult = 0.0;
+            subtractionResult = firstValue - secondValue;
+            Console.WriteLine($"Addition result: {firstValue} - {secondValue} = {subtractionResult}.");
+            return subtractionResult;
         }
-        static int MultiplicationMethod(int firstValue, int secondValue)
+
+        static double MultiplicationMethod(double firstValue, double secondValue)
         {
-            return firstValue * secondValue;
+            var multiplicationResult = 0.0;
+            multiplicationResult = firstValue * secondValue;
+            Console.WriteLine($"Addition result: {firstValue} * {secondValue} = {multiplicationResult}.");
+            return multiplicationResult;
         }
-        static float DivisionMethod(int firstValue, int secondValue)
+
+        static double DivisionMethod(double firstValue, double secondValue)
         {
-            float result = (float)firstValue / (float)secondValue;
-            return result;
+            if (secondValue == 0)
+            {
+                Console.WriteLine("Division by 0 is not possible");
+                return 0;
+            }
+            var divisionResult = 0.0;
+            divisionResult = firstValue / secondValue;
+            Console.WriteLine($"Addition result: {firstValue} / {secondValue} = {divisionResult}.");
+            return divisionResult;
         }
-        static int ModuloMethod(int firstValue, int secondValue)
+
+        static double ExponentiationMethod(double firstValue, double secondValue)
         {
-            return firstValue % secondValue;
+            var exponentiationResult = 0.0;
+            exponentiationResult = Math.Pow(firstValue, secondValue);
+            Console.WriteLine($"Addition result: {firstValue} ^ {secondValue} = {exponentiationResult}.");
+            return exponentiationResult;
+        }
+
+        static double FactorialMethod(double firstValue)
+        {
+            double factorialResult = 1.0;
+            for (double i = 2; i <= firstValue; i++)
+            {
+                factorialResult = factorialResult * i;
+            }
+            Console.WriteLine($"Factorial result for {firstValue} = {factorialResult}.");
+            return factorialResult;
         }
 
         static uint ChooseMethod()
         {
-            uint choice = 0;
-            var isChoice = uint.TryParse(Console.ReadLine(), out choice);
-            if (isChoice && choice > 0 && choice <= 5)
+            var chooseUltima = "y";
+            while (chooseUltima == "y")
             {
-                switch (choice)
+                Console.WriteLine("Please, choose a calculation method:\n 1) Addition (+) \n 2) Subtraction (-) \n 3) Multiplication (*) \n 4) Division (/) \n 5) Exponentiation (^) \n 6) Factorial (n!)");
+                uint choice = 0;
+                var isChoice = uint.TryParse(Console.ReadLine(), out choice);
+                if (isChoice && choice > 0 && choice <= 6)
                 {
-                    case 1:
-                        Console.WriteLine("Cool! You selected Addition Method.");
-                        Console.WriteLine("Please, enter two integer:");
-                        int firstAdditionValue = Convert.ToInt32(Console.ReadLine());
-                        int secondAdditionValue = Convert.ToInt32(Console.ReadLine());
-                        int additionResult = AdditionMethod(firstAdditionValue, secondAdditionValue);
-                        Console.WriteLine($"Addition result: {firstAdditionValue} + {secondAdditionValue} = {additionResult}.");
-                        break;
-                    case 2:
-                        Console.WriteLine("Cool! You selected Subtraction Method.");
-                        Console.WriteLine("Please, enter two integer:");
-                        int firstSubtractionValue = Convert.ToInt32(Console.ReadLine());
-                        int secondSubtractionValue = Convert.ToInt32(Console.ReadLine());
-                        int subtractionResult = SubtractionMethod(firstSubtractionValue, secondSubtractionValue);
-                        Console.WriteLine($"Subtraction result: {firstSubtractionValue} - {secondSubtractionValue} = {subtractionResult}.");
-                        break;
-                    case 3:
-                        Console.WriteLine("Cool! You selected Multiplication Method.");
-                        Console.WriteLine("Please, enter two integer:");
-                        int firstMultiplicationValue = Convert.ToInt32(Console.ReadLine());
-                        int secondMultiplicationValue = Convert.ToInt32(Console.ReadLine());
-                        int multiplicationResult = MultiplicationMethod(firstMultiplicationValue, secondMultiplicationValue);
-                        Console.WriteLine($"Multiplication result: {firstMultiplicationValue} * {secondMultiplicationValue} = {multiplicationResult}.");
-                        break;
-                    case 4:
-                        Console.WriteLine("Cool! You selected Division Method.");
-                        Console.WriteLine("Please, enter two integer:");
-                        int firstDivisionValue = Convert.ToInt32(Console.ReadLine());
-                        int secondDivisionValue = Convert.ToInt32(Console.ReadLine());
-
-                        float divisionResult = DivisionMethod(firstDivisionValue, secondDivisionValue);
-                        Console.WriteLine($"Division result: {firstDivisionValue} / {secondDivisionValue} = {divisionResult}.");
-                        break;
-                    case 5:
-                        Console.WriteLine("Cool! You selected Modulo Method.");
-                        Console.WriteLine("Please, enter two integer:");
-                        int firstModuloValue = Convert.ToInt32(Console.ReadLine());
-                        int secondModuloValue = Convert.ToInt32(Console.ReadLine());
-                        int moduloResult = ModuloMethod(firstModuloValue, secondModuloValue);
-                        Console.WriteLine($"Modulo result: {firstModuloValue} % {secondModuloValue} = {moduloResult}.");
-                        break;
+                    switch (choice)
+                    {
+                        case 1:
+                            Console.WriteLine("Cool! You selected Addition Method.");
+                            break;
+                        case 2:
+                            Console.WriteLine("Cool! You selected Subtraction Method.");
+                            break;
+                        case 3:
+                            Console.WriteLine("Cool! You selected Multiplication Method.");
+                            break;
+                        case 4:
+                            Console.WriteLine("Cool! You selected Division Method.");
+                            break;
+                        case 5:
+                            Console.WriteLine("Cool! You selected Exponentiation Method.");
+                            break;
+                        case 6:
+                            Console.WriteLine("Cool! You selected Factorial Method.");
+                            break;
+                    }
+                    return choice;
+                }
+                Console.WriteLine("You entered invalid values.");
+                Console.WriteLine("Do you want to retry? \n 1) Press 'y' button if - YES \n 2) Press anything button if - NO");
+                chooseUltima = Console.ReadLine();
+                if (chooseUltima != "y")
+                {
+                    Console.WriteLine("Your choice - NO.");
                 }
             }
-            else
-            {
-                Console.WriteLine("Please, select correctly choice and try again");
-            }
-            return choice;
+            return 0;
         }
     }
 }
+
